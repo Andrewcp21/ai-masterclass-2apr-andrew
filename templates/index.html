@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Sales Analyzer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 560px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo-icon {
+      width: 40px; height: 40px;
+      background: #2563eb;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+
+    .logo-text { font-size: 1.2rem; font-weight: 700; color: #f8fafc; }
+    .logo-sub  { font-size: 0.75rem; color: #94a3b8; margin-top: 1px; }
+
+    h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      margin-bottom: 2rem;
+      line-height: 1.5;
+    }
+
+    /* ── DROP ZONE ── */
+    .drop-zone {
+      border: 2px dashed #334155;
+      border-radius: 12px;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .drop-zone:hover,
+    .drop-zone.dragover {
+      border-color: #2563eb;
+      background: rgba(37, 99, 235, 0.05);
+    }
+
+    .drop-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .drop-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+    .drop-label {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      margin-bottom: 0.3rem;
+    }
+
+    .drop-label span { color: #2563eb; font-weight: 600; }
+
+    .drop-hint { font-size: 0.8rem; color: #64748b; }
+
+    /* ── FILE PREVIEW ── */
+    .file-preview {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(37, 99, 235, 0.1);
+      border: 1px solid #2563eb;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .file-preview.show { display: flex; }
+
+    .file-icon { font-size: 1.5rem; }
+
+    .file-info { flex: 1; min-width: 0; }
+    .file-name { font-size: 0.9rem; font-weight: 600; color: #f8fafc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .file-size { font-size: 0.75rem; color: #94a3b8; }
+
+    .file-remove {
+      background: none; border: none;
+      color: #64748b; cursor: pointer;
+      font-size: 1.1rem; padding: 4px;
+      border-radius: 4px;
+      transition: color 0.2s;
+    }
+    .file-remove:hover { color: #ef4444; }
+
+    /* ── BUTTON ── */
+    .btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn:hover:not(:disabled) { background: #1d4ed8; }
+    .btn:active:not(:disabled) { transform: scale(0.98); }
+    .btn:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+
+    /* ── LOADING ── */
+    .loading {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.5rem 0;
+      text-align: center;
+    }
+
+    .loading.show { display: flex; }
+
+    .spinner {
+      width: 44px; height: 44px;
+      border: 3px solid #334155;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text { font-size: 0.95rem; color: #94a3b8; }
+    .loading-step { font-size: 0.8rem; color: #64748b; margin-top: -0.5rem; }
+
+    /* ── SUCCESS ── */
+    .success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      text-align: center;
+    }
+
+    .success.show { display: flex; }
+
+    .success-icon { font-size: 3rem; }
+    .success-title { font-size: 1.1rem; font-weight: 700; color: #22c55e; }
+    .success-sub { font-size: 0.85rem; color: #94a3b8; }
+
+    .btn-download {
+      width: 100%;
+      padding: 0.85rem;
+      background: #22c55e;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-download:hover { background: #16a34a; }
+
+    .btn-reset {
+      background: none;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      border-radius: 8px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-reset:hover { border-color: #64748b; color: #e2e8f0; }
+
+    /* ── ERROR ── */
+    .error-box {
+      display: none;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid #ef4444;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.85rem;
+      color: #fca5a5;
+      margin-bottom: 1rem;
+    }
+
+    .error-box.show { display: block; }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: #475569;
+      text-align: center;
+    }
+
+    .steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: #334155;
+    }
+
+    /* ── API KEY INPUT ── */
+    .api-key-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .api-key-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #94a3b8;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .api-key-wrap {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .api-key-input {
+      flex: 1;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      font-size: 0.85rem;
+      color: #e2e8f0;
+      font-family: monospace;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .api-key-input:focus { border-color: #2563eb; }
+    .api-key-input.valid  { border-color: #22c55e; }
+
+    .api-key-toggle {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 0 0.75rem;
+      color: #64748b;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    .api-key-toggle:hover { color: #e2e8f0; }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-num {
+      width: 28px; height: 28px;
+      background: #334155;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .step-num.active { background: #2563eb; color: white; }
+    .step-label { font-size: 0.7rem; color: #64748b; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+
+    <!-- Logo -->
+    <div class="logo">
+      <div class="logo-icon">📊</div>
+      <div>
+        <div class="logo-text">AI Sales Analyzer</div>
+        <div class="logo-sub">Powered by Claude AI</div>
+      </div>
+    </div>
+
+    <!-- Steps indicator -->
+    <div class="steps">
+      <div class="step">
+        <div class="step-num active" id="step1">1</div>
+        <div class="step-label">Upload CSV</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="step2">2</div>
+        <div class="step-label">Analisis AI</div>
+      </div>
+      <div class="step">
+        <div class="step-num" id="step3">3</div>
+        <div class="step-label">Download PPTX</div>
+      </div>
+    </div>
+
+    <h1>Upload Data Penjualan</h1>
+    <p class="subtitle">
+      Upload file CSV kamu dan Claude AI akan membuat laporan presentasi secara otomatis dalam hitungan detik.
+    </p>
+
+    <!-- Error box -->
+    <div class="error-box" id="errorBox"></div>
+
+    <!-- Upload form -->
+    <div id="uploadSection">
+
+      <!-- API Key -->
+      <div class="api-key-group">
+        <div class="api-key-label">🔑 Anthropic API Key</div>
+        <div class="api-key-wrap">
+          <input class="api-key-input" id="apiKeyInput" type="password"
+                 placeholder="sk-ant-..." autocomplete="off" oninput="onApiKeyInput()" />
+          <button class="api-key-toggle" onclick="toggleApiKey()" title="Show/Hide">👁</button>
+        </div>
+      </div>
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".csv" />
+        <div class="drop-icon">📁</div>
+        <div class="drop-label"><span>Klik untuk pilih file</span> atau drag & drop di sini</div>
+        <div class="drop-hint">Format: CSV · Maks. 5MB</div>
+      </div>
+
+      <div class="file-preview" id="filePreview">
+        <div class="file-icon">📄</div>
+        <div class="file-info">
+          <div class="file-name" id="fileName">-</div>
+          <div class="file-size" id="fileSize">-</div>
+        </div>
+        <button class="file-remove" id="fileRemove" title="Hapus file">✕</button>
+      </div>
+
+      <button class="btn" id="analyzeBtn" disabled onclick="runAnalysis()">
+        <span>✨</span> Buat Laporan Otomatis
+      </button>
+    </div>
+
+    <!-- Loading state -->
+    <div class="loading" id="loadingSection">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loadingText">Membaca data CSV...</div>
+      <div class="loading-step" id="loadingStep">Mohon tunggu, proses ini memakan waktu 15–30 detik</div>
+    </div>
+
+    <!-- Success state -->
+    <div class="success" id="successSection">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Laporan Berhasil Dibuat!</div>
+      <div class="success-sub">8 slide presentasi siap digunakan</div>
+      <a class="btn-download" id="downloadBtn" href="#" download>
+        <span>⬇</span> Download Presentasi (.pptx)
+      </a>
+      <button class="btn-reset" onclick="resetForm()">Analisis file lain</button>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Workshop AI Automation · RevoU · Data dari file kamu tidak disimpan di server
+  </div>
+
+  <script>
+    const fileInput   = document.getElementById('fileInput');
+    const dropZone    = document.getElementById('dropZone');
+    const filePreview = document.getElementById('filePreview');
+    const fileName    = document.getElementById('fileName');
+    const fileSize    = document.getElementById('fileSize');
+    const fileRemove  = document.getElementById('fileRemove');
+    const analyzeBtn  = document.getElementById('analyzeBtn');
+    const errorBox    = document.getElementById('errorBox');
+    const apiKeyInput = document.getElementById('apiKeyInput');
+
+    function onApiKeyInput() {
+      const key = apiKeyInput.value.trim();
+      apiKeyInput.classList.toggle('valid', key.startsWith('sk-ant-') && key.length > 20);
+      updateBtn();
+    }
+
+    function toggleApiKey() {
+      apiKeyInput.type = apiKeyInput.type === 'password' ? 'text' : 'password';
+    }
+
+    function updateBtn() {
+      const hasKey  = apiKeyInput.value.trim().startsWith('sk-ant-');
+      const hasFile = fileInput.files && fileInput.files[0];
+      analyzeBtn.disabled = !(hasKey && hasFile);
+    }
+
+    // ── File selected via click
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files[0]) showFile(fileInput.files[0]);
+    });
+
+    // ── Drag & drop
+    dropZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropZone.classList.add('dragover');
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('dragover');
+    });
+
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      const file = e.dataTransfer.files[0];
+      if (file && file.name.endsWith('.csv')) {
+        fileInput.files = e.dataTransfer.files;
+        showFile(file);
+      } else {
+        showError('Hanya file CSV yang didukung.');
+      }
+    });
+
+    // ── Remove file
+    fileRemove.addEventListener('click', () => resetForm());
+
+    function showFile(file) {
+      fileName.textContent = file.name;
+      fileSize.textContent = (file.size / 1024).toFixed(1) + ' KB';
+      filePreview.classList.add('show');
+      hideError();
+      updateBtn();
+    }
+
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.classList.add('show');
+    }
+
+    function hideError() {
+      errorBox.classList.remove('show');
+    }
+
+    function setStep(n) {
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById('step' + i).classList.toggle('active', i <= n);
+      }
+    }
+
+    // ── Run analysis
+    async function runAnalysis() {
+      if (!fileInput.files[0]) return;
+
+      hideError();
+
+      // Show loading
+      document.getElementById('uploadSection').style.display = 'none';
+      document.getElementById('loadingSection').classList.add('show');
+      setStep(2);
+
+      const steps = [
+        'Membaca data CSV...',
+        'Menghitung statistik penjualan...',
+        'Mengirim data ke Claude AI...',
+        'Claude sedang menganalisis...',
+        'Membuat slide presentasi...',
+      ];
+
+      let s = 0;
+      const interval = setInterval(() => {
+        if (s < steps.length) {
+          document.getElementById('loadingText').textContent = steps[s++];
+        }
+      }, 4000);
+
+      try {
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        formData.append('api_key', apiKeyInput.value.trim());
+
+        const res = await fetch('/analyze', { method: 'POST', body: formData });
+
+        clearInterval(interval);
+
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Terjadi kesalahan di server.');
+        }
+
+        const blob = await res.blob();
+        const url  = URL.createObjectURL(blob);
+
+        document.getElementById('loadingSection').classList.remove('show');
+        document.getElementById('successSection').classList.add('show');
+        document.getElementById('downloadBtn').href = url;
+        document.getElementById('downloadBtn').download = 'laporan_penjualan.pptx';
+        setStep(3);
+
+      } catch (err) {
+        clearInterval(interval);
+        document.getElementById('loadingSection').classList.remove('show');
+        document.getElementById('uploadSection').style.display = 'block';
+        showError('❌ ' + err.message);
+        setStep(1);
+      }
+    }
+
+    function resetForm() {
+      fileInput.value = '';
+      filePreview.classList.remove('show');
+      analyzeBtn.disabled = true;
+      document.getElementById('uploadSection').style.display = 'block';
+      document.getElementById('successSection').classList.remove('show');
+      document.getElementById('loadingSection').classList.remove('show');
+      hideError();
+      setStep(1);
+    }
+  </script>
+
+</body>
+</html>

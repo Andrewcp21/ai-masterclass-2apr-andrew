@@ -627,6 +627,432 @@ input[type=range]::-webkit-slider-thumb {
 .replay-btn:hover { border-color: var(--blue); color: var(--blue); }
 
 /* ═══════════════════════════════════════════════
+   DEMO PIPELINE SLIDE
+═══════════════════════════════════════════════ */
+.demo-layout {
+  display: flex;
+  gap: 24px;
+  margin-top: 18px;
+  height: 460px;
+  align-items: stretch;
+}
+.demo-pipeline {
+  width: 284px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pipe-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: rgba(37,82,144,0.2);
+  border: 1px solid var(--border-2);
+  border-radius: 10px;
+}
+.pipe-cc-logo {
+  width: 32px; height: 32px;
+  object-fit: contain;
+  border-radius: 6px;
+  image-rendering: pixelated;
+}
+.pipe-brand {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--blue);
+  font-family: var(--f-mono);
+  letter-spacing: 0.02em;
+}
+.pipe-flow {
+  background: rgba(8,12,24,0.85);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-height: 0;
+}
+.pipe-node {
+  font-family: var(--f-mono);
+  font-size: 0.73rem;
+  padding: 7px 11px;
+  border-radius: 6px;
+  text-align: center;
+  white-space: nowrap;
+}
+.pipe-node-csv {
+  background: rgba(0,180,216,0.1);
+  border: 1px solid var(--teal);
+  color: var(--teal);
+}
+.pipe-node-script {
+  background: rgba(30,159,212,0.1);
+  border: 1px solid var(--blue);
+  color: var(--blue);
+}
+.pipe-arrow {
+  text-align: center;
+  color: var(--text-3);
+  font-size: 1rem;
+  line-height: 1;
+}
+.pipe-branches {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-left: 10px;
+  border-left: 2px solid var(--border-2);
+  margin-left: 6px;
+}
+.pipe-branch {
+  font-family: var(--f-mono);
+  font-size: 0.68rem;
+  color: var(--text-2);
+  padding: 5px 9px;
+  background: rgba(30,61,110,0.3);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.pipe-branch-tg {
+  color: #29b6f6;
+  background: rgba(41,182,246,0.08);
+}
+.pipe-tg-logo {
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.step-track {
+  display: flex;
+  gap: 5px;
+}
+.step-dot {
+  flex: 1;
+  height: 27px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-3);
+  font-family: var(--f-mono);
+  transition: background 0.4s var(--ease-out), border-color 0.4s, color 0.4s;
+}
+.step-dot.done {
+  background: rgba(0,200,150,0.15);
+  border-color: var(--green);
+  color: var(--green);
+}
+.step-labels {
+  display: flex;
+  gap: 5px;
+}
+.step-labels span {
+  flex: 1;
+  text-align: center;
+  font-size: 0.58rem;
+  color: var(--text-3);
+  font-family: var(--f-mono);
+}
+.demo-term-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.demo-term-wrap .term-window {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.demo-term-wrap .term-body {
+  flex: 1;
+  max-height: none;
+}
+
+/* ═══════════════════════════════════════════════
+   BUILD OVERVIEW SLIDE (slide 14)
+═══════════════════════════════════════════════ */
+.build-overview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-top: 40px;
+  flex: 1;
+}
+.build-block { display: flex; align-items: center; }
+.build-conn {
+  font-size: 2.4rem;
+  color: var(--text-3);
+  flex-shrink: 0;
+  margin: 0 24px;
+  line-height: 1;
+}
+.build-input-card {
+  background: rgba(0,180,216,0.07);
+  border: 1px solid var(--teal);
+  border-radius: 16px;
+  padding: 32px 36px;
+  text-align: center;
+  min-width: 220px;
+}
+.build-engine-card {
+  background: rgba(30,159,212,0.08);
+  border: 2px solid var(--blue);
+  border-radius: 18px;
+  padding: 32px 36px;
+  text-align: center;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 0 60px rgba(30,159,212,0.15);
+}
+.build-cc-logo {
+  width: 72px; height: 72px;
+  object-fit: contain;
+  border-radius: 14px;
+}
+.build-outputs {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.build-out-card {
+  background: rgba(30,61,110,0.3);
+  border: 1px solid var(--border-2);
+  border-radius: 14px;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 260px;
+}
+.build-out-tg {
+  border-color: #29b6f6;
+  background: rgba(41,182,246,0.07);
+}
+.build-tg-logo {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.build-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 4px;
+}
+.build-card-mono {
+  font-family: var(--f-mono);
+  font-size: 0.82rem;
+  color: var(--teal);
+  margin: 8px 0;
+}
+.build-card-sub {
+  font-size: 0.8rem;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+.build-badge {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  background: rgba(30,159,212,0.2);
+  border: 1px solid var(--blue);
+  color: var(--blue);
+  border-radius: 20px;
+  padding: 3px 14px;
+  margin-top: 4px;
+}
+.build-footer {
+  margin-top: 32px;
+  font-size: 0.85rem;
+  color: var(--text-3);
+  font-family: var(--f-mono);
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════
+   CLOSING CTA SLIDE
+═══════════════════════════════════════════════ */
+.cta-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.cta-trilogo {
+  height: 56px;
+  object-fit: contain;
+  background: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+}
+.cta-program {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: var(--f-mono);
+}
+.cta-headline {
+  font-family: var(--f-display);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  text-align: center;
+  margin-top: 4px;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 20px 60px;
+  background: var(--grad-brand);
+  color: white;
+  font-family: var(--f-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  border-radius: 50px;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 60px rgba(30,159,212,0.3);
+  transition: transform 0.2s var(--ease-out), box-shadow 0.2s;
+}
+.cta-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 90px rgba(30,159,212,0.5);
+}
+
+/* ═══════════════════════════════════════════════
+   MORE TO EXPLORE SLIDE (slide 20)
+═══════════════════════════════════════════════ */
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+  height: 68%;
+}
+.explore-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+.explore-card-mcp {
+  border-color: var(--blue);
+  background: rgba(30,159,212,0.06);
+  box-shadow: 0 0 40px rgba(30,159,212,0.08);
+}
+.explore-tag {
+  font-family: var(--f-mono);
+  font-size: 0.6rem;
+  letter-spacing: 1.5px;
+  color: var(--ch, var(--teal));
+}
+.explore-title {
+  font-family: var(--f-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.explore-desc {
+  font-size: 0.78rem;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+.explore-desc .mono {
+  font-family: var(--f-mono);
+  color: var(--green);
+  background: rgba(0,200,150,0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+.explore-screenshot {
+  margin-top: 6px;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+.explore-screenshot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+  filter: brightness(0.88);
+}
+.mcp-logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+  flex: 1;
+}
+.mcp-logo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 6px;
+}
+.mcp-logo-item img {
+  width: 30px; height: 30px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+.mcp-logo-item span {
+  font-family: var(--f-mono);
+  font-size: 0.58rem;
+  color: var(--text-3);
+}
+.hooks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  flex: 1;
+}
+.hook-item {
+  font-family: var(--f-mono);
+  font-size: 0.72rem;
+  color: var(--text-2);
+  background: rgba(30,61,110,0.3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 13px;
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════
    WORKFLOW STEPS
 ═══════════════════════════════════════════════ */
 .flow-steps { display: flex; flex-direction: column; gap: 0; width: 100%; }
@@ -750,20 +1176,8 @@ input[type=range]::-webkit-slider-thumb {
   gap: 0; margin-top: 48px;
   position: relative;
 }
-.roadmap-track::before {
-  content: '';
-  position: absolute; top: 20px; left: 10%; right: 10%; height: 2px;
-  background: var(--border); z-index: 0;
-}
-.roadmap-track::after {
-  content: ''; position: absolute;
-  top: 20px; left: 10%; height: 2px;
-  background: linear-gradient(90deg, var(--blue-2), var(--teal));
-  z-index: 1;
-  width: 0%;
-  transition: width 1.8s var(--ease-out);
-}
-.roadmap-track.animate::after { width: 80%; }
+.roadmap-track::before,
+.roadmap-track::after { display: none; }
 .roadmap-week {
   display: flex; flex-direction: column; align-items: center;
   position: relative; z-index: 2; padding: 0 12px;
@@ -1461,80 +1875,18 @@ input[type=range]::-webkit-slider-thumb {
   </section>
 
   <!-- ═══════════════════════════════════
-       SLIDE 13 — WORKFLOW STEPS
+       SLIDE 13 — INSTALL CLAUDE CODE
   ═══════════════════════════════════ -->
-  <section class="slide" data-chapter="TOOL" data-max-steps="0" data-anim="flow">
-    <div class="slide-label ae ae-1">Alur Kerja</div>
-    <h2 class="display-md ae ae-2">Satu Instruksi, <span class="ch">Laporan Jadi</span></h2>
-    <p class="body-md ae ae-3" style="margin-top:10px;max-width:520px">Tidak ada kode yang perlu ditulis. Cukup instruksi dalam bahasa manusia.</p>
+  <section class="slide" data-chapter="TOOL" data-max-steps="4">
+    <div class="slide-label ae ae-1">Persiapan</div>
+    <h2 class="display-md ae ae-2">Install Claude Code — <span class="ch">3 Langkah</span></h2>
 
-    <div class="flow-steps" style="margin-top:28px;max-width:680px" id="flow-steps">
-      <div class="flow-step revealed" data-flow="0">
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div class="flow-step-dot">1</div>
-          <div style="width:2px;height:20px;background:var(--border);flex-shrink:0"></div>
-        </div>
-        <div class="flow-step-line">
-          <div class="flow-step-title">Buka terminal di folder kerja</div>
-          <div class="flow-step-desc mono" style="font-size:0.8rem;color:var(--green)">$ cd ~/Documents/laporan-bulanan/</div>
-        </div>
-      </div>
-      <div class="flow-step revealed" data-flow="1">
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div class="flow-step-dot">2</div>
-          <div style="width:2px;height:20px;background:var(--border);flex-shrink:0"></div>
-        </div>
-        <div class="flow-step-line">
-          <div class="flow-step-title">Jalankan Claude Code</div>
-          <div class="flow-step-desc mono" style="font-size:0.8rem;color:var(--green)">$ claude</div>
-        </div>
-      </div>
-      <div class="flow-step revealed" data-flow="2">
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div class="flow-step-dot">3</div>
-          <div style="width:2px;height:20px;background:var(--border);flex-shrink:0"></div>
-        </div>
-        <div class="flow-step-line">
-          <div class="flow-step-title">Berikan instruksi dalam bahasa Indonesia</div>
-          <div class="flow-step-desc" style="font-style:italic;color:var(--text-2)">"Baca file data_penjualan.csv. Analisis total revenue, performa per kota, produk terlaris. Tulis laporan profesional di laporan_insights.md."</div>
-        </div>
-      </div>
-      <div class="flow-step revealed" data-flow="3">
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div class="flow-step-dot">4</div>
-          <div style="width:2px;height:20px;background:var(--border);flex-shrink:0"></div>
-        </div>
-        <div class="flow-step-line">
-          <div class="flow-step-title">Claude membaca, menganalisis, menulis</div>
-          <div class="flow-step-desc">Kamu lihat prosesnya real-time di terminal</div>
-        </div>
-      </div>
-      <div class="flow-step revealed" data-flow="4">
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div class="flow-step-dot">✓</div>
-        </div>
-        <div class="flow-step-line">
-          <div class="flow-step-title" style="color:var(--green)">laporan_insights.md — siap dibagikan!</div>
-          <div class="flow-step-desc">Laporan profesional dengan narasi, insight, rekomendasi. &lt; 2 menit.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════
-       SLIDE 14 — SETUP (5 steps)
-  ═══════════════════════════════════ -->
-  <section class="slide" data-chapter="TOOL" data-max-steps="5">
-    <div class="slide-label ae ae-1">Setup</div>
-    <h2 class="display-md ae ae-2">Instalasi <span class="ch">5 Menit, Sekali Seumur Hidup</span></h2>
-    <p class="body-md ae ae-3" style="margin-top:8px">Pastikan ini sudah selesai sebelum sesi demo.</p>
-
-    <div style="margin-top:20px;max-width:640px">
+    <div style="margin-top:24px;max-width:620px">
       <div class="setup-step step-item" data-step="0">
         <div class="setup-num">1</div>
         <div class="setup-content">
           <div class="setup-label">Install Node.js (jika belum ada)</div>
-          <div class="setup-code">nodejs.org → Download → Install</div>
+          <div class="setup-code">nodejs.org → Download LTS → Install</div>
         </div>
       </div>
       <div class="setup-step step-item" data-step="1">
@@ -1548,50 +1900,72 @@ input[type=range]::-webkit-slider-thumb {
         <div class="setup-num">3</div>
         <div class="setup-content">
           <div class="setup-label">Login sekali via browser</div>
-          <div class="setup-code">claude → ikuti proses OAuth di browser</div>
+          <div class="setup-code">claude → ikuti OAuth → selesai</div>
         </div>
       </div>
       <div class="setup-step step-item" data-step="3">
-        <div class="setup-num">4</div>
+        <div class="setup-num" style="background:var(--green);color:var(--ink)">✓</div>
         <div class="setup-content">
-          <div class="setup-label">Masuk ke folder workshop</div>
-          <div class="setup-code">cd workshop/</div>
-        </div>
-      </div>
-      <div class="setup-step step-item" data-step="4">
-        <div class="setup-num" style="background:var(--green)">✓</div>
-        <div class="setup-content">
-          <div class="setup-label">Jalankan Claude Code — siap!</div>
-          <div class="setup-code">claude</div>
+          <div class="setup-label" style="color:var(--green)">Siap! Masuk ke folder proyek kamu dan mulai:</div>
+          <div class="setup-code">cd nama-folder/ &amp;&amp; claude</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════════════════
-       SLIDE 15 — DEMO TERMINAL
+       SLIDE 14 — WHAT WE'RE BUILDING
   ═══════════════════════════════════ -->
-  <section class="slide" data-chapter="TOOL" data-max-steps="0" data-anim="terminal">
-    <div class="slide-label ae ae-1">Live Demo</div>
-    <h2 class="display-md ae ae-2">Instruksi ke Claude Code → <span class="ch">Laporan Jadi</span></h2>
+  <section class="slide" data-chapter="TOOL" data-max-steps="0" style="justify-content:flex-start;text-align:center">
+    <div class="slide-label ae ae-1" style="text-align:left">Demo — Yang Akan Kita Build</div>
+    <h2 class="display-md ae ae-2" style="text-align:left">Sales Report Pipeline — <span class="ch">dari Nol, dalam 5 Menit</span></h2>
 
-    <div class="term-window ae ae-3" style="margin-top:20px">
-      <div class="term-titlebar">
-        <div class="term-dots">
-          <div class="td td-r"></div>
-          <div class="td td-y"></div>
-          <div class="td td-g"></div>
+    <div class="build-overview ae ae-3">
+
+      <!-- Input -->
+      <div class="build-block">
+        <div class="build-input-card">
+          <div style="font-size:2.8rem;margin-bottom:12px">📄</div>
+          <div class="build-card-title">Data CSV</div>
+          <div class="build-card-mono">weekly_sales_data.csv</div>
         </div>
-        <div class="term-title-txt">workshop/ — bash — 80×30</div>
       </div>
-      <div class="term-body" id="demo-term-body">
-        <div id="demo-term-content"></div>
+
+      <div class="build-conn">→</div>
+
+      <!-- Claude Code Engine -->
+      <div class="build-block">
+        <div class="build-engine-card">
+          <img src="../images/Claude Code logo.png" class="build-cc-logo" alt="Claude Code">
+          <div class="build-card-title" style="color:var(--blue);font-size:1.15rem">Claude Code</div>
+          <div class="build-card-sub" style="text-align:center">menulis pipeline<br>otomatis dari nol</div>
+        </div>
       </div>
-      <div class="term-actions">
-        <button class="replay-btn" id="demo-replay" data-no-advance>
-          ↺ &nbsp;Ulangi Demo
-        </button>
+
+      <div class="build-conn">→</div>
+
+      <!-- Outputs -->
+      <div class="build-outputs">
+        <div class="build-out-card">
+          <div style="font-size:2rem;flex-shrink:0">📊</div>
+          <div>
+            <div class="build-card-title">HTML Report Interaktif</div>
+            <div class="build-card-sub">Charts & insights siap dibagikan</div>
+          </div>
+        </div>
+        <div class="build-out-card build-out-tg">
+          <img src="../images/Telegram_logo.svg.webp" class="build-tg-logo" alt="Telegram">
+          <div>
+            <div class="build-card-title">Notifikasi Telegram</div>
+            <div class="build-card-sub">Laporan terkirim otomatis</div>
+          </div>
+        </div>
       </div>
+
+    </div>
+
+    <div class="build-footer ae ae-4">
+      Sekali dibuat — dipakai setiap minggu
     </div>
   </section>
 
@@ -1728,33 +2102,71 @@ input[type=range]::-webkit-slider-thumb {
   </section>
 
   <!-- ═══════════════════════════════════
-       SLIDE 20 — RESOURCES
+       SLIDE 20 — MORE TO EXPLORE
   ═══════════════════════════════════ -->
   <section class="slide" data-chapter="ACTION" data-max-steps="0">
-    <div class="slide-label ae ae-1">Resources</div>
-    <h2 class="display-md ae ae-2">Lanjut Belajar <span class="ch">Setelah Kursus Ini</span></h2>
+    <div class="slide-label ae ae-1">Next Level</div>
+    <h2 class="display-md ae ae-2">Ini Baru <span class="ch">Permukaannya</span></h2>
+    <p class="body-md ae ae-2" style="margin-top:6px">Masih banyak yang bisa dieksplorasi di Claude Code.</p>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px;max-width:800px" class="ae ae-3">
-      <div class="card" style="padding:20px 22px">
-        <div style="font-family:var(--f-mono);font-size:0.62rem;color:var(--ch);letter-spacing:1.5px;margin-bottom:10px">DOKUMENTASI</div>
-        <div style="font-family:var(--f-display);font-weight:700;margin-bottom:6px">Claude Code Docs</div>
-        <div style="font-family:var(--f-mono);font-size:0.78rem;color:var(--green)">docs.anthropic.com/en/claude-code</div>
+    <div class="explore-grid ae ae-3">
+
+      <!-- Card 1: Skills / CLAUDE.md -->
+      <div class="explore-card">
+        <div class="explore-tag">SKILLS &amp; CLAUDE.MD</div>
+        <div class="explore-title">Custom /commands</div>
+        <div class="explore-desc">Simpan instruksi sebagai slash command. Ketik <span class="mono">/weekly-report</span> — pipeline jalan otomatis.</div>
+        <div class="explore-screenshot">
+          <img src="../images/skilss repo screenshot.png" alt="Skills repo">
+        </div>
       </div>
-      <div class="card" style="padding:20px 22px">
-        <div style="font-family:var(--f-mono);font-size:0.62rem;color:var(--ch);letter-spacing:1.5px;margin-bottom:10px">INSTALL</div>
-        <div style="font-family:var(--f-display);font-weight:700;margin-bottom:6px">Claude Code CLI</div>
-        <div style="font-family:var(--f-mono);font-size:0.78rem;color:var(--green)">npm install -g @anthropic-ai/claude-code</div>
+
+      <!-- Card 2: MCP -->
+      <div class="explore-card explore-card-mcp">
+        <div class="explore-tag">MCP — MODEL CONTEXT PROTOCOL</div>
+        <div class="explore-title">Connect to Anything</div>
+        <div class="explore-desc">Claude Code terhubung langsung ke semua tool yang kamu pakai.</div>
+        <div class="mcp-logos">
+          <div class="mcp-logo-item">
+            <img src="../images/github.png" alt="GitHub">
+            <span>GitHub</span>
+          </div>
+          <div class="mcp-logo-item">
+            <img src="../images/notion.png" alt="Notion">
+            <span>Notion</span>
+          </div>
+          <div class="mcp-logo-item">
+            <img src="../images/Slack-logo.png" alt="Slack">
+            <span>Slack</span>
+          </div>
+          <div class="mcp-logo-item">
+            <img src="../images/gdrive.png" alt="Google Drive">
+            <span>Drive</span>
+          </div>
+          <div class="mcp-logo-item">
+            <img src="../images/bq.png" alt="BigQuery">
+            <span>BigQuery</span>
+          </div>
+          <div class="mcp-logo-item">
+            <img src="../images/Telegram_logo.svg.webp" alt="Telegram">
+            <span>Telegram</span>
+          </div>
+        </div>
       </div>
-      <div class="card" style="padding:20px 22px">
-        <div style="font-family:var(--f-mono);font-size:0.62rem;color:var(--ch);letter-spacing:1.5px;margin-bottom:10px">WORKSHOP FILES</div>
-        <div style="font-family:var(--f-display);font-weight:700;margin-bottom:6px">Data & Contoh Instruksi</div>
-        <div style="font-size:0.82rem;color:var(--text-2)">Folder workshop ini sudah berisi data_penjualan.csv dan contoh instruksi siap pakai</div>
+
+      <!-- Card 3: Hooks & Agents -->
+      <div class="explore-card">
+        <div class="explore-tag">HOOKS &amp; AGENTS</div>
+        <div class="explore-title">Otomasi Penuh</div>
+        <div class="explore-desc">Trigger aksi otomatis sebelum/sesudah setiap tool. Bangun pipeline multi-agent yang berjalan sendiri.</div>
+        <div class="hooks-list">
+          <div class="hook-item">⚡ PreToolUse — validasi sebelum eksekusi</div>
+          <div class="hook-item">✅ PostToolUse — log, notify, deploy</div>
+          <div class="hook-item">🤖 Sub-agents — delegasi task secara paralel</div>
+          <div class="hook-item">🔄 Scheduled runs — jalankan tanpa intervensi</div>
+        </div>
       </div>
-      <div class="card" style="padding:20px 22px">
-        <div style="font-family:var(--f-mono);font-size:0.62rem;color:var(--ch);letter-spacing:1.5px;margin-bottom:10px">KOMUNITAS</div>
-        <div style="font-family:var(--f-display);font-weight:700;margin-bottom:6px">Grup & Discord</div>
-        <div style="font-size:0.82rem;color:var(--text-2)">Join komunitas yang disebutkan instruktur untuk saling sharing use case dan script</div>
-      </div>
+
     </div>
   </section>
 
@@ -1828,6 +2240,21 @@ input[type=range]::-webkit-slider-thumb {
         AI Automation untuk Data Analyst
       </div>
       <div style="font-family:var(--f-mono);font-size:0.75rem;color:var(--text-3);margin-top:8px">docs.anthropic.com/en/claude-code · RevoU</div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       SLIDE 23 — CLOSING CTA
+  ═══════════════════════════════════ -->
+  <section class="slide" data-chapter="ACTION" data-max-steps="0" style="align-items:center">
+    <div class="cta-slide">
+      <img src="../images/logo-trilogo-revou-binus.webp" class="cta-trilogo ae ae-1" alt="RevoU × BINUS × GreatNusa">
+      <div class="cta-program ae ae-2">Applied AI, Analytics, and Automation</div>
+      <h2 class="cta-headline ae ae-3">Mau diganti AI?<br><span class="ch">Jadi yang bisa AI segera!</span></h2>
+      <a href="https://www.revou.co/applied-ai-automation?utm_campaign=masterclass&utm_content=deck"
+         class="cta-btn ae ae-4" target="_blank" rel="noopener" data-no-advance>
+        KUY! &nbsp;→
+      </a>
     </div>
   </section>
 
@@ -2080,22 +2507,53 @@ function onEnter(idx) {
 const termContent = document.getElementById('demo-term-content');
 
 const TERM_SCRIPT = [
-  { t: 0,    type: 'prompt', text: '$ cd workshop/' },
-  { t: 500,  type: 'prompt', text: '$ claude' },
-  { t: 1100, type: 'comment', text: '> Claude Code siap. Ketuk instruksi kamu.' },
-  { t: 1600, type: 'blank' },
-  { t: 1900, type: 'typing', text: 'Baca file data_penjualan.csv. Analisis total revenue, performa per kota, produk terlaris, dan anomali yang perlu diperhatikan. Tulis hasilnya sebagai laporan profesional di laporan_insights.md.' },
-  { t: 5200, type: 'blank' },
-  { t: 5400, type: 'amber', text: '⟳  Membaca data_penjualan.csv...' },
-  { t: 6000, type: 'amber', text: '⟳  Menganalisis 1.247 baris transaksi...' },
-  { t: 6600, type: 'progress' },
-  { t: 9000, type: 'amber', text: '⟳  Menyusun narasi insight dan rekomendasi...' },
-  { t: 9700, type: 'blank' },
-  { t: 9900, type: 'success', text: '✓  laporan_insights.md dibuat (2.847 kata)' },
-  { t: 10400, type: 'success', text: '✓  Laporan profesional siap dibagikan' },
-  { t: 10900, type: 'output', text: '   Waktu total: 1 menit 43 detik' },
-  { t: 11300, type: 'blank' },
-  { t: 11500, type: 'cursor' },
+  // Launch Claude Code
+  { t: 0,     type: 'prompt',  text: '$ cd workshop/' },
+  { t: 500,   type: 'prompt',  text: '$ claude' },
+  { t: 1100,  type: 'comment', text: '✓  Claude Code ready. What can I build?' },
+  { t: 1600,  type: 'blank' },
+  // Trigger demo
+  { t: 1800,  type: 'typing',  text: 'start demo' },
+  { t: 3400,  type: 'blank' },
+  // Step 1 — CSV
+  { t: 3600,  type: 'amber',   text: '⟳  [Step 1] Checking weekly_sales_data.csv...' },
+  { t: 4300,  type: 'success', text: '✓  Found! 80 rows · 8 weeks · 3 regions (Jakarta, Surabaya, Bandung)' },
+  { t: 4900,  type: 'step',    n: 1 },
+  { t: 5000,  type: 'blank' },
+  // Step 2 — requirements.txt
+  { t: 5200,  type: 'amber',   text: '⟳  [Step 2] Writing requirements.txt...' },
+  { t: 5800,  type: 'success', text: '✓  requirements.txt — pandas · plotly · python-dotenv' },
+  { t: 6300,  type: 'step',    n: 2 },
+  { t: 6400,  type: 'blank' },
+  // Step 3 — .env / Telegram
+  { t: 6600,  type: 'amber',   text: '⟳  [Step 3] Configuring Telegram credentials (.env)...' },
+  { t: 7400,  type: 'success', text: '✓  Bot verified: @SalesReportBot is live.' },
+  { t: 7900,  type: 'step',    n: 3 },
+  { t: 8000,  type: 'blank' },
+  // Step 4 — sales_pipeline.py (main event)
+  { t: 8200,  type: 'amber',   text: '⟳  [Step 4] Writing sales_pipeline.py...' },
+  { t: 8900,  type: 'output',  text: '   → load_and_analyze() — revenue, achievement, top region' },
+  { t: 9300,  type: 'output',  text: '   → 5 Plotly charts: bar · trend · pie · heatmap · leaderboard' },
+  { t: 9700,  type: 'output',  text: '   → build_html_report() — responsive, self-contained' },
+  { t: 10100, type: 'output',  text: '   → send_telegram() — summary message + .html file' },
+  { t: 10500, type: 'success', text: '✓  sales_pipeline.py created — 250+ lines in seconds' },
+  { t: 11000, type: 'step',    n: 4 },
+  { t: 11100, type: 'blank' },
+  // Step 5 — pip install
+  { t: 11300, type: 'amber',   text: '⟳  [Step 5] pip install -r requirements.txt -q' },
+  { t: 12100, type: 'progress' },
+  { t: 14800, type: 'success', text: '✓  Dependencies installed.' },
+  { t: 15300, type: 'step',    n: 5 },
+  { t: 15400, type: 'blank' },
+  // Step 6 — Run pipeline
+  { t: 15600, type: 'amber',   text: '⟳  [Step 6] python -X utf8 sales_pipeline.py' },
+  { t: 16200, type: 'output',  text: '   → 80 rows loaded · Weeks 1–8 · Achievement 94.2%' },
+  { t: 16700, type: 'output',  text: '   → Saved: sales_report_2026-04-02.html' },
+  { t: 17200, type: 'success', text: '✓  Report sent to Telegram — summary + HTML file attached' },
+  { t: 17700, type: 'success', text: '✓  Browser opened. Report ready!' },
+  { t: 18200, type: 'step',    n: 6 },
+  { t: 18400, type: 'blank' },
+  { t: 18600, type: 'cursor' },
 ];
 
 function addTermLine(type, text) {
@@ -2158,6 +2616,11 @@ function addCursor() {
   termContent.appendChild(div);
 }
 
+function markDemoStep(n) {
+  const dot = document.getElementById('ds-' + n);
+  if (dot) dot.classList.add('done');
+}
+
 function stopTerminal() {
   termTimeouts.forEach(clearTimeout);
   typingTos.forEach(clearTimeout);
@@ -2169,6 +2632,7 @@ function runTerminal() {
   if (termRunning) return;
   termRunning = true;
   if (termContent) termContent.innerHTML = '';
+  document.querySelectorAll('.step-dot').forEach(d => d.classList.remove('done'));
   stopTerminal();
 
   TERM_SCRIPT.forEach(step => {
@@ -2176,16 +2640,18 @@ function runTerminal() {
       if (step.type === 'typing') { await typeText(step.text); }
       else if (step.type === 'progress') { addTermProgress(); }
       else if (step.type === 'cursor') { addCursor(); }
+      else if (step.type === 'step') { markDemoStep(step.n); }
       else { addTermLine(step.type, step.text || ''); }
     }, step.t);
     termTimeouts.push(t);
   });
 
-  const end = setTimeout(() => { termRunning = false; }, 12500);
+  const end = setTimeout(() => { termRunning = false; }, 19500);
   termTimeouts.push(end);
 }
 
-document.getElementById('demo-replay').addEventListener('click', e => {
+const demoReplay = document.getElementById('demo-replay');
+if (demoReplay) demoReplay.addEventListener('click', e => {
   e.stopPropagation();
   termRunning = false;
   runTerminal();
