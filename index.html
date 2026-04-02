@@ -1287,26 +1287,24 @@ input[type=range]::-webkit-slider-thumb {
    MOBILE — ≤ 640px
 ═══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  /* Slide layout: compact padding, allow vertical scroll */
+  /* ── Base slide ── */
   .slide {
-    padding: 20px 20px 56px;
+    padding: 20px 16px 56px;
     overflow-y: auto;
     justify-content: flex-start;
     -webkit-overflow-scrolling: touch;
   }
 
-  /* Hero slide: stack columns, hide logo image */
+  /* ── Slide 01: Hero — stack, hide logo image ── */
   .hero-grid {
     grid-template-columns: 1fr !important;
     height: auto !important;
     min-height: 100%;
   }
-  .hero-left {
-    padding: 28px 0 0 !important;
-  }
+  .hero-left { padding: 28px 0 0 !important; }
   .hero-right { display: none !important; }
 
-  /* Instructor: stack photo + content */
+  /* ── Slide 02: Instructor — stack photo + content ── */
   .instructor-grid {
     grid-template-columns: 1fr !important;
     gap: 20px !important;
@@ -1321,42 +1319,102 @@ input[type=range]::-webkit-slider-thumb {
   .instructor-content { padding-right: 0 !important; }
   .instructor-2col { grid-template-columns: 1fr !important; }
 
-  /* Stats: tighter */
-  .stats-grid { grid-template-columns: 1fr 1fr; margin-top: 16px; gap: 10px; }
+  /* ── Slide 04: Stats — 1 column ── */
+  .stats-grid { grid-template-columns: 1fr !important; margin-top: 16px; gap: 10px; }
   .stat-num { font-size: clamp(1.6rem, 6vw, 2.5rem); }
+  .stat-card { padding: 18px 20px; }
 
-  /* Comparison table: horizontal scroll */
+  /* ── Slide 06: Comparison table — scroll ── */
   .comp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 16px; }
   .comp-table { min-width: 440px; margin-top: 0; }
 
-  /* Roadmap: 2 cols, no connector line */
-  .roadmap-track { grid-template-columns: 1fr 1fr !important; margin-top: 24px !important; gap: 16px !important; }
+  /* ── Slide 12: Tool table — scroll ── */
+  .tool-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 16px; }
+  .tool-table { min-width: 460px; }
 
-  /* Quick wins */
+  /* ── Slide 14: Build overview — stack vertically ── */
+  .build-overview {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    margin-top: 16px;
+  }
+  .build-block { justify-content: center; }
+  .build-conn { transform: rotate(90deg); margin: 0 auto !important; font-size: 1.4rem !important; }
+  .build-input-card, .build-engine-card {
+    min-width: 0 !important;
+    width: 100%;
+    padding: 18px 20px !important;
+  }
+  .build-cc-logo { width: 48px !important; height: 48px !important; }
+  .build-outputs { width: 100%; }
+  .build-out-card { min-width: 0 !important; padding: 12px 16px !important; }
+  .build-footer { margin-top: 14px; }
+
+  /* ── Slide 15: Demo terminal — stack pipeline above terminal ── */
+  .demo-layout {
+    flex-direction: column !important;
+    height: auto !important;
+    gap: 16px;
+  }
+  .demo-pipeline { width: 100% !important; }
+  .demo-term-wrap .term-body { max-height: 220px; }
+
+  /* ── Slide 19: Roadmap — 2 cols ── */
+  .roadmap-track {
+    grid-template-columns: 1fr 1fr !important;
+    margin-top: 20px !important;
+    gap: 14px !important;
+  }
+  .rw-dot { width: 32px !important; height: 32px !important; font-size: 0.85rem !important; }
+
+  /* ── Slide 18: Quick wins — 1 column ── */
   .quickwin-grid { grid-template-columns: 1fr !important; margin-top: 16px; gap: 12px; }
+  .qw-card { padding: 20px 18px; }
 
-  /* Split panels: no fixed height */
-  .split-panel { height: auto !important; padding: 18px !important; }
-  .two-col { height: auto !important; }
+  /* ── Slide 20: Explore grid — 1 column ── */
+  .explore-grid {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .explore-card { padding: 16px; }
+  .explore-screenshot { max-height: 100px; }
 
-  /* Path cards */
-  .path-old, .path-new { height: auto !important; padding: 24px 20px !important; }
+  /* ── Slides 03/07/08/09/10/16/17/21: two-col — stack, fix inline heights ── */
+  .two-col { height: auto !important; gap: 16px !important; }
+  .split-panel { height: auto !important; padding: 16px !important; }
+  .panel-steps li { font-size: 0.82rem; }
+  .challenge-card { padding: 16px !important; height: auto !important; }
+  .path-old, .path-new { height: auto !important; padding: 20px 16px !important; }
 
-  /* Typography */
-  .display-giant { font-size: clamp(2rem, 9vw, 3.5rem); letter-spacing: -0.5px; }
-  .display-xl    { font-size: clamp(1.5rem, 6.5vw, 2.5rem); letter-spacing: -0.5px; }
-  .display-lg    { font-size: clamp(1.3rem, 5vw, 2rem); letter-spacing: -0.5px; }
-  .display-md    { font-size: clamp(1.1rem, 4vw, 1.6rem); }
-  .slide-label   { margin-bottom: 10px; }
-  .annotation    { margin-top: 20px; }
+  /* ── Slide 23: CTA ── */
+  .cta-btn { padding: 14px 32px !important; font-size: 1.05rem !important; }
+  .cta-headline { font-size: clamp(1.5rem, 7vw, 2.2rem) !important; }
+  .cta-trilogo { height: 40px !important; }
 
-  /* HUD compact */
-  #hud-bottom  { padding: 6px 12px; gap: 8px; }
-  #hud-chapter { font-size: 0.55rem; min-width: 50px; letter-spacing: 1.5px; }
-  #hud-counter { font-size: 0.55rem; min-width: 40px; }
+  /* ── Typography ── */
+  .display-giant { font-size: clamp(1.9rem, 9vw, 3.2rem); letter-spacing: -0.5px; }
+  .display-xl    { font-size: clamp(1.4rem, 6.5vw, 2.2rem); letter-spacing: -0.5px; }
+  .display-lg    { font-size: clamp(1.2rem, 5vw, 1.9rem); letter-spacing: -0.5px; }
+  .display-md    { font-size: clamp(1rem, 4.5vw, 1.5rem); }
+  .body-lg       { font-size: 0.9rem; }
+  .body-md       { font-size: 0.85rem; }
+  .slide-label   { margin-bottom: 10px; font-size: 0.62rem; }
+  .annotation    { margin-top: 16px; padding: 12px 14px; }
 
-  /* Challenge cards */
-  .challenge-card { padding: 18px; }
+  /* ── HUD — compact ── */
+  #hud-bottom  { padding: 6px 10px; gap: 8px; }
+  #hud-chapter { font-size: 0.52rem; min-width: 46px; letter-spacing: 1px; }
+  #hud-counter { font-size: 0.52rem; min-width: 36px; }
+  #hud-bottom > div:last-child { display: none; } /* hide Instagram on mobile */
+
+  /* ── Global spacing ── */
+  .card { padding: 14px 16px; }
+  .setup-step { padding: 12px 14px; gap: 12px; }
+  .setup-code { font-size: 0.72rem; white-space: normal; word-break: break-all; }
+  .mini-term  { font-size: 0.68rem; }
 }
 
 /* ═══════════════════════════════════════════════
@@ -1832,7 +1890,7 @@ input[type=range]::-webkit-slider-thumb {
     <div class="slide-label ae ae-1">Kenapa Claude Code?</div>
     <h2 class="display-md ae ae-2">Ini yang Bikin <span class="ch">Claude Code Berbeda</span></h2>
 
-    <table class="tool-table ae ae-3">
+    <div class="tool-table-wrap ae ae-3"><table class="tool-table">
       <thead style="border-bottom:1px solid var(--border)">
         <tr>
           <td style="font-family:var(--f-mono);font-size:0.65rem;color:var(--text-3);letter-spacing:1.5px;padding-bottom:10px">TOOL</td>
@@ -1868,6 +1926,8 @@ input[type=range]::-webkit-slider-thumb {
         </tr>
       </tbody>
     </table>
+
+    </div><!-- /tool-table-wrap -->
 
     <div style="margin-top:20px;padding:14px 20px;background:rgba(124,109,240,0.07);border:1px solid rgba(124,109,240,0.2);border-radius:10px;font-size:0.9rem;color:var(--text-2);max-width:720px" class="ae ae-4">
       <strong style="color:var(--text-1)">"Claude Code bukan chatbot.</strong> Dia adalah partner kerja yang langsung masuk ke folder kamu, baca datanya, dan kerjakan tugasnya."
