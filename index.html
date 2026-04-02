@@ -870,6 +870,82 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 /* ═══════════════════════════════════════════════
+   MOBILE — ≤ 640px
+═══════════════════════════════════════════════ */
+@media (max-width: 640px) {
+  /* Slide layout: compact padding, allow vertical scroll */
+  .slide {
+    padding: 20px 20px 56px;
+    overflow-y: auto;
+    justify-content: flex-start;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Hero slide: stack columns, hide logo image */
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: 100%;
+  }
+  .hero-left {
+    padding: 28px 0 0 !important;
+  }
+  .hero-right { display: none !important; }
+
+  /* Instructor: stack photo + content */
+  .instructor-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    height: auto !important;
+    align-items: flex-start !important;
+  }
+  .instructor-photo-wrap { display: flex; justify-content: center; }
+  .instructor-photo {
+    width: clamp(100px, 28vw, 140px) !important;
+    height: clamp(100px, 28vw, 140px) !important;
+  }
+  .instructor-content { padding-right: 0 !important; }
+  .instructor-2col { grid-template-columns: 1fr !important; }
+
+  /* Stats: tighter */
+  .stats-grid { grid-template-columns: 1fr 1fr; margin-top: 16px; gap: 10px; }
+  .stat-num { font-size: clamp(1.6rem, 6vw, 2.5rem); }
+
+  /* Comparison table: horizontal scroll */
+  .comp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 16px; }
+  .comp-table { min-width: 440px; margin-top: 0; }
+
+  /* Roadmap: 2 cols, no connector line */
+  .roadmap-track { grid-template-columns: 1fr 1fr !important; margin-top: 24px !important; gap: 16px !important; }
+
+  /* Quick wins */
+  .quickwin-grid { grid-template-columns: 1fr !important; margin-top: 16px; gap: 12px; }
+
+  /* Split panels: no fixed height */
+  .split-panel { height: auto !important; padding: 18px !important; }
+  .two-col { height: auto !important; }
+
+  /* Path cards */
+  .path-old, .path-new { height: auto !important; padding: 24px 20px !important; }
+
+  /* Typography */
+  .display-giant { font-size: clamp(2rem, 9vw, 3.5rem); letter-spacing: -0.5px; }
+  .display-xl    { font-size: clamp(1.5rem, 6.5vw, 2.5rem); letter-spacing: -0.5px; }
+  .display-lg    { font-size: clamp(1.3rem, 5vw, 2rem); letter-spacing: -0.5px; }
+  .display-md    { font-size: clamp(1.1rem, 4vw, 1.6rem); }
+  .slide-label   { margin-bottom: 10px; }
+  .annotation    { margin-top: 20px; }
+
+  /* HUD compact */
+  #hud-bottom  { padding: 6px 12px; gap: 8px; }
+  #hud-chapter { font-size: 0.55rem; min-width: 50px; letter-spacing: 1.5px; }
+  #hud-counter { font-size: 0.55rem; min-width: 40px; }
+
+  /* Challenge cards */
+  .challenge-card { padding: 18px; }
+}
+
+/* ═══════════════════════════════════════════════
    REDUCED MOTION
 ═══════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
@@ -895,10 +971,10 @@ input[type=range]::-webkit-slider-thumb {
     <div style="position:absolute;top:0;right:0;bottom:0;width:50%;background:radial-gradient(ellipse 80% 80% at 70% 50%,rgba(0,180,216,0.08) 0%,transparent 70%);pointer-events:none;z-index:0"></div>
 
     <!-- Two-column layout -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;height:100%;align-items:center;position:relative;z-index:1">
+    <div class="hero-grid" style="display:grid;grid-template-columns:1fr 1fr;height:100%;align-items:center;position:relative;z-index:1">
 
       <!-- LEFT: text content -->
-      <div style="padding:48px 48px 0 96px;display:flex;flex-direction:column;justify-content:center">
+      <div class="hero-left" style="padding:48px 48px 0 96px;display:flex;flex-direction:column;justify-content:center">
 
         <!-- Trilogo above headline -->
         <div class="ae ae-1" style="margin-bottom:24px">
@@ -929,7 +1005,7 @@ input[type=range]::-webkit-slider-thumb {
       </div>
 
       <!-- RIGHT: Claude Code logo as hero -->
-      <div class="ae ae-2" style="display:flex;align-items:center;justify-content:center;height:100%;padding-top:64px">
+      <div class="ae ae-2 hero-right" style="display:flex;align-items:center;justify-content:center;height:100%;padding-top:64px">
         <div style="position:relative;display:inline-block">
           <!-- Glow ring behind logo -->
           <div style="position:absolute;inset:-40px;border-radius:24px;background:radial-gradient(ellipse,rgba(230,100,70,0.18) 0%,transparent 70%);pointer-events:none"></div>
@@ -950,11 +1026,11 @@ input[type=range]::-webkit-slider-thumb {
     <!-- Yellow circle accent -->
     <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:var(--yellow);opacity:0.08;pointer-events:none;z-index:0"></div>
 
-    <div style="display:grid;grid-template-columns:auto 1fr;gap:60px;align-items:center;position:relative;z-index:1;height:100%">
+    <div class="instructor-grid" style="display:grid;grid-template-columns:auto 1fr;gap:60px;align-items:center;position:relative;z-index:1;height:100%">
 
       <!-- Photo -->
-      <div class="ae ae-1" style="flex-shrink:0">
-        <div style="position:relative;width:clamp(180px,20vw,260px);height:clamp(180px,20vw,260px)">
+      <div class="ae ae-1 instructor-photo-wrap" style="flex-shrink:0">
+        <div class="instructor-photo" style="position:relative;width:clamp(180px,20vw,260px);height:clamp(180px,20vw,260px)">
           <!-- Glow ring -->
           <div style="position:absolute;inset:-8px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--blue-2));opacity:0.6;z-index:0"></div>
           <img src="https://cdn.prod.website-files.com/621804855324383d02afa44e/69cb792c1546ff2c16e76873_Andrew%201.png"
@@ -969,7 +1045,7 @@ input[type=range]::-webkit-slider-thumb {
       </div>
 
       <!-- Content -->
-      <div style="padding-right:48px">
+      <div class="instructor-content" style="padding-right:48px">
         <div class="ae ae-1" style="font-family:var(--f-mono);font-size:0.65rem;color:var(--teal);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px">
           Your Instructor
         </div>
@@ -980,7 +1056,7 @@ input[type=range]::-webkit-slider-thumb {
           Performance Marketing Lead · RevoU
         </div>
 
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px" class="ae ae-4">
+        <div class="ae ae-4 instructor-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
           <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px">
             <div style="font-family:var(--f-mono);font-size:0.6rem;color:var(--text-3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Experience</div>
             <div style="font-family:var(--f-display);font-weight:700;font-size:1.3rem;color:var(--teal)">5+ Years</div>
@@ -1128,7 +1204,8 @@ input[type=range]::-webkit-slider-thumb {
     <div class="slide-label ae ae-1">Perbandingan</div>
     <h2 class="display-lg ae ae-2">Manual vs <span class="ch">AI Automation</span></h2>
 
-    <table class="comp-table ae ae-3">
+    <div class="comp-table-wrap ae ae-3">
+    <table class="comp-table">
       <thead>
         <tr>
           <th>Aspek Pekerjaan</th>
@@ -1145,6 +1222,7 @@ input[type=range]::-webkit-slider-thumb {
         <tr class="tr-row"><td>Nilai karir</td><td class="td-manual">Stagnan</td><td class="td-ai">Naik level</td></tr>
       </tbody>
     </table>
+    </div>
   </section>
 
   <!-- ═══════════════════════════════════
@@ -2162,6 +2240,25 @@ function toggleFullscreen() {
   } else {
     document.exitFullscreen().catch(() => {});
   }
+}
+
+/* ─── TOUCH SWIPE ────────────────────────────── */
+let touchStartX = 0, touchStartY = 0;
+document.addEventListener('touchstart', e => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].screenX - touchStartX;
+  const dy = e.changedTouches[0].screenY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+    if (dx < 0) advance(); else retreat();
+  }
+}, { passive: true });
+
+// Update hint for mobile
+if ('ontouchstart' in window) {
+  hintTxt.textContent = 'tap · swipe ←';
 }
 
 /* ─── INIT ───────────────────────────────────── */
